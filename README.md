@@ -3,7 +3,7 @@ When you run multiple PLEX Servers, this scripts goal is to kick a USERID if the
 
 For Unraid users, just deploy this script under "USER SCRIPTS"
 
-**Bash Script:** [av1_flow_v4.json](av1_flow_v4.json)
+**Bash Script:** [plex-session-killer.sh](plex-session-killer.sh)
 
 # Log Entry on how it Works
 
