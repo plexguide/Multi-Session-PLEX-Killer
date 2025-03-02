@@ -77,7 +77,7 @@ kill_user_sessions() {
         log_message "  Terminating session ID: $session_id on server: $url"
         local enc_user
         enc_user=$(echo "$username" | sed 's/ /%20/g')
-        local msg="Too%20Many%20Streaming%20Sessions%20USER%20${enc_user}%20between%20all%20PLEX%20servers!%20Only%20${MAX_STREAMS}%20are%20allowed%20at%20a%20time!"
+        local msg="Too%20Many%20Streaming%20Sessions%20For%20USER%20${enc_user}%20between%20all%20PLEX%20servers!%20Only%20${MAX_STREAMS}%20are%20allowed%20at%20a%20time!"
         local resp
         resp=$(curl -s "${url}?apikey=${apikey}&cmd=terminate_session&session_id=${session_id}&session_key=${session_key}&message=${msg}")
         log_message "  Terminate response: ${resp}"
