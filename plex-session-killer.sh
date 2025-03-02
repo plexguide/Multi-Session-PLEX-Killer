@@ -11,7 +11,7 @@
 # Dependencies: jq
 # ============================================================
 
-WAIT_TIME=10
+WAIT_TIME=60
 MAX_STREAMS=2
 USER_LOG="/tmp/user.log"
 
