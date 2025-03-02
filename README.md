@@ -1,5 +1,7 @@
 # Multi-Session Plex Killer
 
+<h2 align="center">Want to Help? Click the Star in the Upper-Right Corner! ⭐</h2>
+
 **Purpose**  
 If you run multiple Plex servers and want to limit how many concurrent streams a particular user can have *across all servers*, this script can help. Simply set a threshold (e.g., 2 total streams), and if a user exceeds it (e.g., 3 streams across any combination of servers), the script will terminate all of their active sessions.
 
