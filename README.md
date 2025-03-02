@@ -1,7 +1,9 @@
-# multiple-tautulli-stream-control
+# multi-session-plex-kiler
 When you run multiple PLEX Servers, this scripts goal is to kick a USERID if they are streaming across multiple PLEX Servers based on a threshold of your choosing. For example, if you want the USERID to only utilize 2 streams across multiple PLEX Servers, this script will kick them off all servers if they are suddenly streaming with 3 streams. You can change the number in the provided script. This page will be updated in the future (just getting it going).
 
 For Unraid users, just deploy this script under "USER SCRIPTS"
+
+**Bash Script:** [av1_flow_v4.json](av1_flow_v4.json)
 
 # Log Entry on how it Works
 
