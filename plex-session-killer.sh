@@ -15,24 +15,40 @@ WAIT_TIME=60
 MAX_STREAMS=2
 USER_LOG="/tmp/user.log"
 
+# Add an array of exempt users who won't be limited
+EXEMPT_USERS=(
+  "user1"
+  "user2"
+  # Add more exempt users as needed
+)
+
 TAUTULLI_API_KEYS=(
   "dad9bbb78bde43249754b630b58fbf7c" #server 1
   "f0a6722ac8ec4899abef2e9f32c6d7ca" #server 2
-  "" #server 3
-  "" #server 4
+  "d02d602b0cb94070ad4055d4dbd6502e" #server 3
+  "e7981b9c0342423e9e064fbef1c7dcdc" #server 4
 )
 
-# WARNING, make sure the http or https is set correctly
-# This also works just for one server also, just add or delete the servers but make the "" stays
 TAUTULLI_URLS=(
-  "http://10.0.0.10/api/v2" #server 1
-  "http://10.0.0.15/api/v2" #server 2
-  "" #server 3
-  "" #server 4
+  "http://10.0.0.10:8181/api/v2" #server 1
+  "http://10.0.0.10:8182/api/v2" #server 2
+  "http://10.0.0.10:8183/api/v2" #server 3
+  "http://10.0.0.10:8184/api/v2" #server 4
 )
 
 log_message() {
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $1"
+}
+
+# Function to check if a user is exempt
+is_exempt_user() {
+    local check_user="$1"
+    for exempt_user in "${EXEMPT_USERS[@]}"; do
+        if [ "$check_user" = "$exempt_user" ]; then
+            return 0  # True, user is exempt
+        fi
+    done
+    return 1  # False, user is not exempt
 }
 
 gather_server_sessions() {
@@ -125,11 +141,22 @@ while true; do
         # 3) Display user counts
         log_message "User session counts:"
         for user in "${!user_counts[@]}"; do
-            log_message "   $user: ${user_counts[$user]} session(s)"
+            # Check if user is exempt
+            if is_exempt_user "$user"; then
+                log_message "   $user: ${user_counts[$user]} session(s) [EXEMPT]"
+            else
+                log_message "   $user: ${user_counts[$user]} session(s)"
+            fi
         done
         
         # 4) Check for users exceeding limits and terminate their sessions
         for user in "${!user_counts[@]}"; do
+            # Skip exempt users
+            if is_exempt_user "$user"; then
+                log_message "USER $user is exempt from the stream limit (${user_counts[$user]} active streams)"
+                continue
+            fi
+            
             if [ "${user_counts[$user]}" -gt "$MAX_STREAMS" ]; then
                 log_message "USER $user has exceeded the stream limit! (${user_counts[$user]}/${MAX_STREAMS})"
                 kill_user_sessions "$user"
@@ -140,5 +167,6 @@ while true; do
     fi
 
     log_message "Check complete. Waiting ${WAIT_TIME} seconds for next run..."
+    echo ""
     sleep "$WAIT_TIME"
 done
