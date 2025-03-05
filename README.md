@@ -12,6 +12,11 @@ If you run multiple Plex servers and want to limit how many concurrent streams a
 - **Easy Deployment (Unraid):** If you’re on Unraid, simply place the script in the **User Scripts** plugin and schedule or run it as needed.  
 - **Custom Message:** When a user is forced off, they’ll see a warning message indicating they exceeded the global limit.
 
+## Versions
+
+v1: Initial Script
+v2: Added to Exempt User(s)
+
 ## Quick Start
 
 1. **Download the Bash script:**  
